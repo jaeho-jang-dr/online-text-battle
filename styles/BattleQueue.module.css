@@ -1,0 +1,215 @@
+.queueContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.queueForm {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  width: 100%;
+  max-width: 600px;
+}
+
+.queueForm h3 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2d3436;
+  font-size: 2em;
+  font-weight: 700;
+}
+
+.matchTypeSection {
+  margin-bottom: 30px;
+}
+
+.matchTypeSection h4 {
+  margin-bottom: 15px;
+  color: #2d3436;
+  font-weight: 600;
+}
+
+.matchTypeOptions {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.radioOption {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.radioOption:hover {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.radioOption input[type="radio"]:checked + span {
+  color: #667eea;
+  font-weight: 700;
+}
+
+.radioOption input[type="radio"]:checked ~ * {
+  color: #667eea;
+}
+
+.radioOption input[type="radio"] {
+  margin-top: 3px;
+}
+
+.radioOption span {
+  font-weight: 600;
+  color: #2d3436;
+}
+
+.radioOption small {
+  display: block;
+  color: #636e72;
+  margin-top: 4px;
+}
+
+.characterPreview {
+  margin-bottom: 30px;
+}
+
+.characterPreview h4 {
+  margin-bottom: 15px;
+  color: #2d3436;
+  font-weight: 600;
+}
+
+.characterCard {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.characterCard strong {
+  display: block;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.characterCard p {
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+}
+
+.joinBtn {
+  flex: 1;
+  background: linear-gradient(45deg, #00b894, #00a085);
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 184, 148, 0.3);
+}
+
+.cancelBtn {
+  flex: 1;
+  background: linear-gradient(45deg, #636e72, #5a6c7d);
+  color: white;
+  padding: 15px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.waitingArea {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  text-align: center;
+  width: 100%;
+  max-width: 500px;
+}
+
+.waitingArea h3 {
+  color: #2d3436;
+  font-size: 1.8em;
+  margin-bottom: 30px;
+  font-weight: 700;
+}
+
+.queueInfo {
+  margin-bottom: 40px;
+}
+
+.timer {
+  font-size: 2em;
+  font-weight: 700;
+  color: #667eea;
+  margin-bottom: 15px;
+}
+
+.matchTypeInfo {
+  color: #636e72;
+  font-weight: 600;
+}
+
+.loadingAnimation {
+  margin-bottom: 40px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e9ecef;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.loadingAnimation p {
+  color: #636e72;
+  font-weight: 600;
+}
+
+.leaveQueueBtn {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+  color: white;
+  padding: 15px 30px;
+  border-radius: 10px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.error {
+  background: #ffe6e6;
+  color: #d63031;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #fab1a0;
+  text-align: center;
+}
