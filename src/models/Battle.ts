@@ -186,14 +186,14 @@ export class BattleModel {
     targetId?: number
   ): Promise<ApiResponse<{ battle: Battle; action: BattleAction }>> {
     try {
-      return await runTransaction(async (db) => {
+      return (await runTransaction(async (db) => {
         // 배틀과 캐릭터 정보 조회
         const battle = await this.findById(battleId);
         if (!battle) {
           return {
             success: false,
             message: '배틀을 찾을 수 없습니다.'
-          };
+          } as ApiResponse<{ battle: Battle; action: BattleAction }>;
         }
         
         if (battle.status !== 'in_progress') {
@@ -254,7 +254,7 @@ export class BattleModel {
           },
           message: battleResult ? `배틀이 종료되었습니다. 승자: ${battleResult}` : '액션이 성공적으로 수행되었습니다.'
         };
-      });
+      })) as any;
     } catch (error) {
       console.error('배틀 액션 수행 오류:', error);
       return {

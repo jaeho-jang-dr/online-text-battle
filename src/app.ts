@@ -13,13 +13,17 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || "http://localhost:3000",
-    methods: ["GET", "POST"]
+    origin: "*", // 개발 환경에서는 모든 origin 허용
+    methods: ["GET", "POST"],
+    credentials: true
   }
 });
 
 // 미들웨어 설정
-app.use(cors());
+app.use(cors({
+  origin: "*", // 개발 환경에서는 모든 origin 허용
+  credentials: true
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

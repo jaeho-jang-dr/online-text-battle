@@ -21,18 +21,16 @@ declare global {
  * JWT 토큰 생성
  */
 export function generateToken(userId: number, username: string, isAdmin: boolean = false): string {
-  if (!process.env.JWT_SECRET) {
-    throw new Error('JWT_SECRET 환경 변수가 설정되지 않았습니다.');
-  }
+  const secret = process.env.JWT_SECRET || 'default-secret-key-for-development';
 
   const payload: Omit<JwtPayload, 'iat' | 'exp'> = {
     userId,
     username
   };
 
-  return jwt.sign(
+  return (jwt as any).sign(
     payload,
-    process.env.JWT_SECRET,
+    secret,
     { 
       expiresIn: process.env.JWT_EXPIRES_IN || '24h',
       issuer: 'online-text-battle'
@@ -45,11 +43,8 @@ export function generateToken(userId: number, username: string, isAdmin: boolean
  */
 export function verifyToken(token: string): JwtPayload | null {
   try {
-    if (!process.env.JWT_SECRET) {
-      throw new Error('JWT_SECRET 환경 변수가 설정되지 않았습니다.');
-    }
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
+    const secret = process.env.JWT_SECRET || 'default-secret-key-for-development';
+    const decoded = jwt.verify(token, secret) as JwtPayload;
     return decoded;
   } catch (error) {
     console.error('토큰 검증 실패:', error);

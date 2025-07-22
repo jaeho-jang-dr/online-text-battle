@@ -231,7 +231,7 @@ router.post('/:id/action', authenticateToken, async (req, res) => {
     }
 
     // 액션 타입 검증
-    const validActionTypes: ActionType[] = ['attack', 'skill', 'defend'];
+    const validActionTypes: ActionType[] = [ActionType.ATTACK, ActionType.SKILL, ActionType.DEFEND];
     if (!validActionTypes.includes(actionType)) {
       const response: ApiResponse = {
         success: false,

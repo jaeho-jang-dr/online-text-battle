@@ -125,10 +125,13 @@ export interface BattleAction {
 // 액션 타입
 export enum ActionType {
   ATTACK = 'attack',
-  SKILL = 'skill',
+  SKILL = 'skill', 
   DEFEND = 'defend',
   ITEM = 'item'
 }
+
+// 액션 타입을 위한 유니언 타입도 제공
+export type ActionTypeString = 'attack' | 'skill' | 'defend' | 'item';
 
 // 랭킹 인터페이스
 export interface Ranking {

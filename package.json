@@ -1,6 +1,6 @@
 {
   "name": "online-text-battle",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "main": "index.js",
   "directories": {
     "doc": "docs"

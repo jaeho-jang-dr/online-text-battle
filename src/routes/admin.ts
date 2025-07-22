@@ -19,7 +19,7 @@ const mockData = {
             username: 'testuser2',
             email: 'test2@example.com',
             createdAt: new Date('2024-01-20'),
-            lastLogin: new Date('2024-01-25'),
+            lastLogin: new Date('2024-01-25') as Date,
             status: 'offline'
         }
     ],
@@ -63,7 +63,7 @@ const mockData = {
             status: 'in_progress',
             turnCount: 5,
             createdAt: new Date(),
-            winnerId: null
+            winnerId: null as number | null
         },
         {
             id: 2,
@@ -74,7 +74,7 @@ const mockData = {
             status: 'finished',
             turnCount: 8,
             createdAt: new Date('2024-01-25'),
-            winnerId: 1,
+            winnerId: 1 as number | null,
             winner: { name: '전사' }
         }
     ],

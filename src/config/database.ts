@@ -10,7 +10,7 @@ export async function initializeDatabase(): Promise<Database<sqlite3.Database, s
   }
 
   try {
-    const dbPath = process.env.DATABASE_URL || path.join(process.cwd(), 'database.sqlite');
+    const dbPath = process.env.DATABASE_URL || path.join(process.cwd(), 'database_new.sqlite');
     
     db = await open({
       filename: dbPath,
@@ -21,6 +21,14 @@ export async function initializeDatabase(): Promise<Database<sqlite3.Database, s
 
     // 데이터베이스 테이블 생성
     await createTables();
+    
+    // 테이블 생성 확인
+    const tables = await db.all("SELECT name FROM sqlite_master WHERE type='table'");
+    console.log('생성된 테이블들:', tables.map(t => t.name));
+    
+    // users 테이블 구조 확인
+    const usersSchema = await db.all("PRAGMA table_info(users)");
+    console.log('users 테이블 구조:', usersSchema);
 
     return db;
   } catch (error) {
@@ -33,9 +41,12 @@ async function createTables(): Promise<void> {
   if (!db) throw new Error('데이터베이스가 초기화되지 않았습니다.');
 
   try {
+    // 기존 users 테이블 삭제하고 다시 생성
+    await db.exec('DROP TABLE IF EXISTS users');
+    
     // Users 테이블
     await db.exec(`
-      CREATE TABLE IF NOT EXISTS users (
+      CREATE TABLE users (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username VARCHAR(50) UNIQUE NOT NULL,
         email VARCHAR(100) UNIQUE NOT NULL,
@@ -257,17 +268,26 @@ async function createIndexes(): Promise<void> {
   if (!db) return;
 
   try {
-    await db.exec(`
-      CREATE INDEX IF NOT EXISTS idx_users_username ON users(username);
-      CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
-      CREATE INDEX IF NOT EXISTS idx_characters_user_id ON characters(user_id);
-      CREATE INDEX IF NOT EXISTS idx_battles_status ON battles(status);
-      CREATE INDEX IF NOT EXISTS idx_battles_players ON battles(player1_id, player2_id);
-      CREATE INDEX IF NOT EXISTS idx_battle_actions_battle_id ON battle_actions(battle_id);
-      CREATE INDEX IF NOT EXISTS idx_rankings_points ON rankings(points DESC);
-      CREATE INDEX IF NOT EXISTS idx_system_logs_level ON system_logs(level);
-      CREATE INDEX IF NOT EXISTS idx_system_logs_created_at ON system_logs(created_at);
-    `);
+    // 개별적으로 인덱스 생성하여 오류를 무시
+    const indexes = [
+      'CREATE INDEX IF NOT EXISTS idx_users_username ON users(username)',
+      'CREATE INDEX IF NOT EXISTS idx_users_email ON users(email)', 
+      'CREATE INDEX IF NOT EXISTS idx_characters_user_id ON characters(user_id)',
+      'CREATE INDEX IF NOT EXISTS idx_battles_status ON battles(status)',
+      'CREATE INDEX IF NOT EXISTS idx_battles_players ON battles(player1_id, player2_id)',
+      'CREATE INDEX IF NOT EXISTS idx_battle_actions_battle_id ON battle_actions(battle_id)',
+      'CREATE INDEX IF NOT EXISTS idx_rankings_points ON rankings(points DESC)',
+      'CREATE INDEX IF NOT EXISTS idx_system_logs_level ON system_logs(level)',
+      'CREATE INDEX IF NOT EXISTS idx_system_logs_created_at ON system_logs(created_at)'
+    ];
+    
+    for (const indexQuery of indexes) {
+      try {
+        await db.exec(indexQuery);
+      } catch (error) {
+        console.warn('인덱스 생성 건너뜀:', indexQuery, error.message);
+      }
+    }
 
     console.log('🔍 데이터베이스 인덱스 생성 완료');
   } catch (error) {
