@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo $HOME)",
+      "Bash(ls:*)",
+      "Bash(echo $APPDATA)",
+      "Bash(claude config)",
+      "Bash(where git)",
+      "Bash(dir \"C:\\Program Files\\Git\\bin\\bash.exe\")",
+      "Bash(where claude)",
+      "Bash(pip show:*)",
+      "Bash(where:*)",
+      "Bash(dir %APPDATA%\\Claude\\claude_desktop_config.json)"
+    ],
+    "deny": []
+  }
+}
