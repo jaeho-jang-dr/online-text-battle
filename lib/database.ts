@@ -6,9 +6,15 @@ let db: Database.Database;
 
 export function getDatabase() {
   if (!db) {
-    db = new Database(dbPath);
-    db.pragma('journal_mode = WAL');
-    initializeTables();
+    try {
+      db = new Database(dbPath);
+      db.pragma('journal_mode = WAL');
+      initializeTables();
+      console.log('✅ Database connected successfully');
+    } catch (error) {
+      console.error('❌ Database connection failed:', error);
+      throw error;
+    }
   }
   return db;
 }
@@ -62,7 +68,7 @@ function initializeTables() {
       player1_elo_after INTEGER,
       player2_elo_after INTEGER,
       elo_change INTEGER,
-      status ENUM('waiting', 'in_progress', 'completed', 'cancelled') DEFAULT 'waiting',
+      status TEXT DEFAULT 'waiting' CHECK (status IN ('waiting', 'in_progress', 'completed', 'cancelled')),
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       completed_at DATETIME,
       FOREIGN KEY (player1_id) REFERENCES users(id),
@@ -77,7 +83,7 @@ function initializeTables() {
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       user_id INTEGER UNIQUE NOT NULL,
       elo_rating INTEGER NOT NULL,
-      preferred_opponent ENUM('random', 'similar_rating', 'leaderboard') DEFAULT 'random',
+      preferred_opponent TEXT DEFAULT 'random' CHECK (preferred_opponent IN ('random', 'similar_rating', 'leaderboard')),
       joined_at DATETIME DEFAULT CURRENT_TIMESTAMP,
       FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     )

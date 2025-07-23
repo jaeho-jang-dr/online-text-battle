@@ -23,17 +23,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
+    console.log('📝 Registration attempt:', { username, email });
+    
     const db = getDatabase();
 
     // Check if user already exists
     const existingUser = db.prepare('SELECT id FROM users WHERE username = ? OR email = ?').get(username, email);
     if (existingUser) {
+      console.log('❌ User already exists:', { username, email });
       return res.status(400).json({ message: '이미 존재하는 사용자명 또는 이메일입니다.' });
     }
 
     // Hash password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
+    console.log('🔐 Password hashed successfully');
 
     // Create user
     const insertUser = db.prepare(`
@@ -43,6 +47,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     const result = insertUser.run(username, email, hashedPassword);
     const userId = result.lastInsertRowid;
+    console.log('👤 User created with ID:', userId);
 
     // Get created user
     const user = db.prepare('SELECT id, username, email, elo_rating, games_played, wins, losses FROM users WHERE id = ?').get(userId);
@@ -53,6 +58,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       process.env.JWT_SECRET || 'your-secret-key',
       { expiresIn: '7d' }
     );
+    console.log('🎫 JWT token generated');
 
     res.status(201).json({
       message: '회원가입이 완료되었습니다.',
@@ -60,7 +66,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       token
     });
   } catch (error) {
-    console.error('Registration error:', error);
-    res.status(500).json({ message: '서버 오류가 발생했습니다.' });
+    console.error('❌ Registration error:', error);
+    res.status(500).json({ message: '서버 오류가 발생했습니다.', error: error.message });
   }
 }
