@@ -11,7 +11,10 @@
       "Bash(pip show:*)",
       "Bash(where:*)",
       "Bash(dir %APPDATA%\\Claude\\claude_desktop_config.json)",
-      "Bash(npm run build:*)"
+      "Bash(npm run build:*)",
+      "Bash(npm install:*)",
+      "Bash(ccusage --help)",
+      "Bash(npx ccusage:*)"
     ],
     "deny": []
   }

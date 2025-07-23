@@ -6,7 +6,7 @@
 ## 개발 단계별 계획
 
 ### Phase 1: 프로젝트 기반 설정 및 기본 구조
-- [x] 프로젝트 초기화 및 폴더 구조 생성
+- [ ] 프로젝트 초기화 및 폴더 구조 생성
 - [ ] package.json 설정 (Node.js, TypeScript, Express, Socket.io)
 - [ ] TypeScript 설정
 - [ ] 기본 Express 서버 구조
@@ -57,9 +57,8 @@ npm start
 ```
 
 ## 현재 진행 상황
-- Phase 1 진행 중
-- 기본 프로젝트 구조 설정 완료
-- 다음: package.json 및 TypeScript 설정
+- 프로젝트 초기 상태로 리셋됨
+- Phase 1부터 다시 시작
 
 ## 개발 규칙
 - 모든 코드는 TypeScript로 작성
