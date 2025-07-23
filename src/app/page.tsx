@@ -12,7 +12,13 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    checkAuth();
+    // URL 파라미터로 새 세션 여부 확인
+    const urlParams = new URLSearchParams(window.location.search);
+    const newSession = urlParams.get('new');
+    
+    if (!newSession) {
+      checkAuth();
+    }
   }, []);
 
   const checkAuth = async () => {

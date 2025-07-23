@@ -116,6 +116,11 @@ export default function Lobby() {
     router.push('/');
   };
 
+  const handleNewLogin = () => {
+    // 새 탭에서 로그인 페이지 열기
+    window.open('/?new=true', '_blank');
+  };
+
   return (
     <div>
       <nav className="nav">
@@ -123,6 +128,9 @@ export default function Lobby() {
           <h1>Online Text Battle</h1>
           <div className="nav-links">
             <span>환영합니다, {user?.username}님!</span>
+            <button onClick={handleNewLogin} style={{ marginRight: '10px' }}>
+              다른 계정으로 로그인
+            </button>
             <button onClick={handleLogout}>로그아웃</button>
           </div>
         </div>
