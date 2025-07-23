@@ -6,8 +6,8 @@ let db: Database | null = null;
 
 export async function getDb() {
   if (!db) {
-    // Vercel 환경에서는 메모리 DB 사용
-    const filename = process.env.VERCEL ? ':memory:' : './database.sqlite';
+    // 프로덕션 환경에서는 메모리 DB 사용
+    const filename = process.env.NODE_ENV === 'production' ? ':memory:' : './database.sqlite';
     
     db = await open({
       filename,
