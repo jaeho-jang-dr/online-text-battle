@@ -4,9 +4,9 @@
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "forwardPorts": [3000, 3001],
-  "postCreateCommand": "npm install",
-  "postAttachCommand": "npm run dev",
+  "forwardPorts": [3000],
+  "postCreateCommand": "chmod +x start.sh && npm install",
+  "postAttachCommand": "./start.sh",
   "waitFor": "postCreateCommand",
   "customizations": {
     "codespaces": {
@@ -16,23 +16,23 @@
       "extensions": [
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode"
-      ]
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash"
+      }
     }
   },
   "portsAttributes": {
     "3000": {
       "label": "Game Server",
-      "onAutoForward": "openBrowser",
-      "visibility": "public"
-    },
-    "3001": {
-      "label": "Game Server (Alternative)",
-      "onAutoForward": "silent",
-      "visibility": "public"
+      "onAutoForward": "openBrowserOnce",
+      "visibility": "public",
+      "protocol": "https"
     }
   },
   "remoteEnv": {
     "JWT_SECRET": "dev-secret-key-for-codespaces",
-    "NODE_ENV": "development"
+    "NODE_ENV": "development",
+    "PORT": "3000"
   }
 }

@@ -6,8 +6,8 @@ let db: Database | null = null;
 
 export async function getDb() {
   if (!db) {
-    // 프로덕션 환경에서는 메모리 DB 사용
-    const filename = process.env.NODE_ENV === 'production' ? ':memory:' : './database.sqlite';
+    // Codespaces나 개발 환경에서는 항상 로컬 파일 사용
+    const filename = './database.sqlite';
     
     db = await open({
       filename,

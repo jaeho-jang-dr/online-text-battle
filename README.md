@@ -9,19 +9,27 @@
 
 1. 위 버튼 클릭 또는 [여기 클릭](https://codespaces.new/jaeho-jang-dr/online-text-battle)
 2. "Create codespace" 클릭 (GitHub 로그인 필요)
-3. VS Code가 브라우저에서 열리면 터미널이 자동으로 `npm run dev` 실행
-4. 우측 하단에 "Open in Browser" 알림이 뜨면 클릭
-5. 또는 PORTS 탭에서 3000번 포트 우클릭 → "Open in Browser"
-6. 생성된 URL을 친구들과 공유!
+3. Codespace가 열리면 자동으로 서버가 시작됩니다
+4. 브라우저가 자동으로 열리거나, PORTS 탭에서 3000번 포트 클릭
+5. 생성된 URL을 친구들과 공유!
+
+**수동 실행이 필요한 경우:**
+```bash
+# 터미널에서 실행
+./start.sh
+
+# 또는
+npm run dev
+```
 
 **장점:**
 - ✅ GitHub 계정만 있으면 무료 사용 가능 (월 120시간 무료)
 - ✅ 데이터베이스 포함 완전한 서버 환경
 - ✅ 설치 불필요, 브라우저에서 모든 것이 실행됨
 
-**문제 해결:**
-- 서버가 자동으로 시작되지 않으면 터미널에서 `npm run dev` 실행
-- 포트가 열리지 않으면 PORTS 탭에서 수동으로 3000번 포트 공개 설정
+**친구들과 공유:**
+- Codespace URL 형식: `https://{codespace-name}-3000.app.github.dev`
+- 게스트 로그인 버튼으로 회원가입 없이 바로 플레이!
 
 ### 방법 2: Gitpod에서 실행 (무료)
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/jaeho-jang-dr/online-text-battle)
