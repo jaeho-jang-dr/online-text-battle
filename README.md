@@ -2,6 +2,19 @@
 
 온라인 텍스트 배틀 게임 - 100자 이내의 텍스트로 대결하는 실시간 배틀 게임
 
+## 🚀 Railway로 배포하기 (추천)
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/deploy?template=https://github.com/jaeho-jang-dr/online-text-battle)
+
+### Railway 배포 단계:
+1. 위 버튼 클릭
+2. GitHub 계정으로 로그인
+3. 환경 변수 설정:
+   - `JWT_SECRET`: 보안 키 (예: `my-super-secret-key-123`)
+   - `OLLAMA_API_URL`: Ollama API URL (선택사항)
+4. Deploy 클릭
+5. 배포 완료 후 제공된 URL로 접속
+
 ## 🚀 빠른 시작 (친구들과 함께하기)
 
 ### 방법 1: GitHub Codespaces에서 실행 (완전 무료)

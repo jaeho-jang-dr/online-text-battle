@@ -6,11 +6,11 @@ let db: Database | null = null;
 
 export async function getDb() {
   if (!db) {
-    // Codespaces나 개발 환경에서는 항상 로컬 파일 사용
-    const filename = './database.sqlite';
+    // Railway에서는 볼륨에 데이터베이스 저장
+    const filename = process.env.DATABASE_URL || './database.sqlite';
     
     db = await open({
-      filename,
+      filename: filename.startsWith('file:') ? filename.substring(5) : filename,
       driver: sqlite3.Database
     });
     
