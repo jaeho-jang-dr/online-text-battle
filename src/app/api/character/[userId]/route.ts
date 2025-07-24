@@ -4,7 +4,7 @@ import { getUserFromRequest } from '@/lib/auth';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { userId: string } }
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
     const cookieHeader = request.headers.get('cookie');
@@ -17,10 +17,11 @@ export async function GET(
       );
     }
 
-    const userId = parseInt(params.userId);
+    const { userId } = await params;
+    const userIdNum = parseInt(userId);
     
     // 자신의 캐릭터만 조회 가능
-    if (user.id !== userId) {
+    if (user.id !== userIdNum) {
       return NextResponse.json(
         { success: false, message: 'Unauthorized' },
         { status: 403 }
@@ -30,7 +31,7 @@ export async function GET(
     const db = await getDb();
     const character = await db.get(
       'SELECT * FROM characters WHERE user_id = ? AND is_active = 1',
-      userId
+      userIdNum
     );
 
     return NextResponse.json({ success: true, character });

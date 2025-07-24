@@ -59,6 +59,55 @@ export default function Home() {
     }
   };
 
+  const handleGuestLogin = async () => {
+    setError('');
+    setLoading(true);
+
+    try {
+      const guestUsername = `Guest_${Math.random().toString(36).substring(2, 8)}`;
+      const guestPassword = Math.random().toString(36).substring(2, 12);
+      
+      // 먼저 게스트 계정 생성
+      const registerRes = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          username: guestUsername, 
+          password: guestPassword,
+          isGuest: true 
+        }),
+      });
+
+      const registerData = await registerRes.json();
+
+      if (registerData.success) {
+        // 바로 로그인
+        const loginRes = await fetch('/api/auth/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            username: guestUsername, 
+            password: guestPassword 
+          }),
+        });
+
+        const loginData = await loginRes.json();
+        
+        if (loginData.success) {
+          router.push('/lobby');
+        } else {
+          setError('게스트 로그인 실패');
+        }
+      } else {
+        setError('게스트 계정 생성 실패');
+      }
+    } catch (error) {
+      setError('게스트 로그인 중 오류가 발생했습니다.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="auth-container">
       <h1>{isLogin ? '로그인' : '회원가입'}</h1>
@@ -105,6 +154,29 @@ export default function Home() {
           {isLogin ? '회원가입' : '로그인'}
         </button>
       </p>
+
+      <div style={{ marginTop: '30px', textAlign: 'center' }}>
+        <p style={{ marginBottom: '10px', color: '#666' }}>또는</p>
+        <button
+          onClick={handleGuestLogin}
+          disabled={loading}
+          style={{
+            backgroundColor: '#28a745',
+            color: 'white',
+            padding: '12px 24px',
+            fontSize: '16px',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: loading ? 'not-allowed' : 'pointer',
+            width: '100%'
+          }}
+        >
+          {loading ? '처리중...' : '🎮 바로 플레이하기 (게스트)'}
+        </button>
+        <p style={{ marginTop: '10px', fontSize: '12px', color: '#666' }}>
+          회원가입 없이 바로 게임을 즐길 수 있습니다!
+        </p>
+      </div>
     </div>
   );
 }
