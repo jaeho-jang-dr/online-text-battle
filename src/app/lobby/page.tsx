@@ -182,9 +182,28 @@ export default function Lobby() {
         <div className="grid">
           <div className="card">
             <h2>내 정보</h2>
-            <p>ELO 레이팅: {user?.elo_rating}</p>
-            <p>전적: {user?.wins}승 {user?.losses}패</p>
-            <p>승률: {user?.total_battles ? ((user.wins / user.total_battles) * 100).toFixed(1) : 0}%</p>
+            <p><strong>ELO 레이팅:</strong> {user?.elo_rating}</p>
+            <div style={{ marginTop: '10px' }}>
+              <p style={{ marginBottom: '5px' }}><strong>전체 전적</strong></p>
+              <p style={{ margin: '0 0 5px 10px' }}>
+                {user?.wins || 0}승 {user?.losses || 0}패 
+                (승률: {user?.total_battles ? ((user.wins / user.total_battles) * 100).toFixed(1) : 0}%)
+              </p>
+            </div>
+            <div style={{ marginTop: '10px' }}>
+              <p style={{ marginBottom: '5px' }}><strong>공격 전적</strong></p>
+              <p style={{ margin: '0 0 5px 10px' }}>
+                {user?.attack_wins || 0}승 {(user?.attack_battles || 0) - (user?.attack_wins || 0)}패
+                (승률: {user?.attack_battles ? (((user.attack_wins || 0) / user.attack_battles) * 100).toFixed(1) : 0}%)
+              </p>
+            </div>
+            <div style={{ marginTop: '10px' }}>
+              <p style={{ marginBottom: '5px' }}><strong>수비 전적</strong></p>
+              <p style={{ margin: '0 0 5px 10px' }}>
+                {user?.defense_wins || 0}승 {(user?.defense_battles || 0) - (user?.defense_wins || 0)}패
+                (승률: {user?.defense_battles ? (((user.defense_wins || 0) / user.defense_battles) * 100).toFixed(1) : 0}%)
+              </p>
+            </div>
           </div>
 
           <div className="card">

@@ -6,6 +6,10 @@ export interface User {
   wins: number;
   losses: number;
   is_online: boolean;
+  attack_battles?: number;
+  attack_wins?: number;
+  defense_battles?: number;
+  defense_wins?: number;
 }
 
 export interface Character {

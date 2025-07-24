@@ -214,29 +214,49 @@ export async function processBattle(
     reason, score1, score2
   ]);
 
-  // 유저 통계 업데이트
+  // 유저 통계 업데이트 (공격/수비 구분)
+  // player1은 항상 공격자 (배틀을 신청한 사람)
+  // player2는 항상 수비자 (매칭된 사람 또는 AI)
   if (winner === 'player1') {
+    // 공격자 승리
     await db.run(`
       UPDATE users 
-      SET elo_rating = ?, total_battles = total_battles + 1, wins = wins + 1 
+      SET elo_rating = ?, 
+          total_battles = total_battles + 1, 
+          wins = wins + 1,
+          attack_battles = attack_battles + 1,
+          attack_wins = attack_wins + 1
       WHERE id = ?
     `, [player1NewElo, player1Id]);
     
+    // 수비자 패배
     await db.run(`
       UPDATE users 
-      SET elo_rating = ?, total_battles = total_battles + 1, losses = losses + 1 
+      SET elo_rating = ?, 
+          total_battles = total_battles + 1, 
+          losses = losses + 1,
+          defense_battles = defense_battles + 1
       WHERE id = ?
     `, [player2NewElo, player2Id]);
   } else {
+    // 공격자 패배
     await db.run(`
       UPDATE users 
-      SET elo_rating = ?, total_battles = total_battles + 1, losses = losses + 1 
+      SET elo_rating = ?, 
+          total_battles = total_battles + 1, 
+          losses = losses + 1,
+          attack_battles = attack_battles + 1
       WHERE id = ?
     `, [player1NewElo, player1Id]);
     
+    // 수비자 승리
     await db.run(`
       UPDATE users 
-      SET elo_rating = ?, total_battles = total_battles + 1, wins = wins + 1 
+      SET elo_rating = ?, 
+          total_battles = total_battles + 1, 
+          wins = wins + 1,
+          defense_battles = defense_battles + 1,
+          defense_wins = defense_wins + 1
       WHERE id = ?
     `, [player2NewElo, player2Id]);
   }

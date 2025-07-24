@@ -34,9 +34,38 @@ async function initializeDb() {
       total_battles INTEGER DEFAULT 0,
       wins INTEGER DEFAULT 0,
       losses INTEGER DEFAULT 0,
-      elo_rating INTEGER DEFAULT 1200
+      elo_rating INTEGER DEFAULT 1200,
+      attack_battles INTEGER DEFAULT 0,
+      attack_wins INTEGER DEFAULT 0,
+      defense_battles INTEGER DEFAULT 0,
+      defense_wins INTEGER DEFAULT 0
     )
   `);
+  
+  // Add new columns if they don't exist (for existing databases)
+  try {
+    const userTableInfo = await database.all(`PRAGMA table_info(users)`);
+    const userColumns = userTableInfo.map((col: any) => col.name);
+    
+    if (!userColumns.includes('attack_battles')) {
+      await database.exec(`ALTER TABLE users ADD COLUMN attack_battles INTEGER DEFAULT 0`);
+      console.log('Added attack_battles column to users table');
+    }
+    if (!userColumns.includes('attack_wins')) {
+      await database.exec(`ALTER TABLE users ADD COLUMN attack_wins INTEGER DEFAULT 0`);
+      console.log('Added attack_wins column to users table');
+    }
+    if (!userColumns.includes('defense_battles')) {
+      await database.exec(`ALTER TABLE users ADD COLUMN defense_battles INTEGER DEFAULT 0`);
+      console.log('Added defense_battles column to users table');
+    }
+    if (!userColumns.includes('defense_wins')) {
+      await database.exec(`ALTER TABLE users ADD COLUMN defense_wins INTEGER DEFAULT 0`);
+      console.log('Added defense_wins column to users table');
+    }
+  } catch (error) {
+    console.log('Note: Could not check/add new user columns, table might not exist yet:', error);
+  }
   
   // Characters table
   await database.exec(`
