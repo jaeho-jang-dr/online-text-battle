@@ -6,8 +6,12 @@
   },
   "forwardPorts": [3000, 3001],
   "postCreateCommand": "npm install",
-  "postStartCommand": "npm run dev",
+  "postAttachCommand": "npm run dev",
+  "waitFor": "postCreateCommand",
   "customizations": {
+    "codespaces": {
+      "openFiles": ["README.md"]
+    },
     "vscode": {
       "extensions": [
         "dbaeumer.vscode-eslint",
@@ -18,13 +22,17 @@
   "portsAttributes": {
     "3000": {
       "label": "Game Server",
-      "onAutoForward": "notify",
+      "onAutoForward": "openBrowser",
       "visibility": "public"
     },
     "3001": {
       "label": "Game Server (Alternative)",
-      "onAutoForward": "notify",
+      "onAutoForward": "silent",
       "visibility": "public"
     }
+  },
+  "remoteEnv": {
+    "JWT_SECRET": "dev-secret-key-for-codespaces",
+    "NODE_ENV": "development"
   }
 }
