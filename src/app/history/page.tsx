@@ -199,108 +199,130 @@ export default function History() {
           <div 
             style={{
               backgroundColor: 'white',
-              borderRadius: '8px',
-              padding: '30px',
-              maxWidth: '600px',
+              borderRadius: '12px',
+              padding: '20px',
+              maxWidth: '450px',
               width: '90%',
-              maxHeight: '80vh',
+              maxHeight: '90vh',
               overflow: 'auto',
-              boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)'
+              boxShadow: '0 8px 32px rgba(0, 0, 0, 0.15)'
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            <h2 style={{ marginBottom: '20px' }}>
-              배틀 상세 정보
+            <div style={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center',
+              marginBottom: '15px'
+            }}>
+              <h3 style={{ margin: 0, fontSize: '18px' }}>배틀 상세 정보</h3>
               <button
                 onClick={() => setSelectedBattle(null)}
                 style={{
-                  float: 'right',
                   background: 'none',
                   border: 'none',
                   fontSize: '24px',
                   cursor: 'pointer',
-                  color: '#999'
+                  color: '#999',
+                  padding: '0',
+                  width: '30px',
+                  height: '30px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
                 }}
               >
                 ×
               </button>
-            </h2>
+            </div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <p style={{ fontSize: '14px', color: '#666' }}>
+            <div style={{ 
+              backgroundColor: selectedBattle.youWon ? '#e8f5e9' : '#ffebee',
+              padding: '12px',
+              borderRadius: '8px',
+              marginBottom: '15px',
+              textAlign: 'center'
+            }}>
+              <p style={{ fontSize: '12px', color: '#666', margin: '0 0 5px 0' }}>
                 {formatDate(selectedBattle.ended_at)}
               </p>
-              <h3 style={{ margin: '10px 0' }}>
-                {selectedBattle.player1_character} vs {selectedBattle.player2_character}
-              </h3>
               <p style={{ 
-                fontSize: '18px',
+                fontSize: '16px',
                 fontWeight: 'bold',
-                color: selectedBattle.youWon ? '#4caf50' : '#ff6b6b'
+                color: selectedBattle.youWon ? '#2e7d32' : '#d32f2f',
+                margin: 0
               }}>
                 {selectedBattle.youWon ? '승리' : '패배'}
               </p>
             </div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <h4>배틀 대사</h4>
+            <div style={{ marginBottom: '15px' }}>
+              <h4 style={{ fontSize: '14px', margin: '0 0 10px 0' }}>배틀 대사</h4>
               <div style={{ 
-                backgroundColor: '#f9f9f9',
-                padding: '15px',
-                borderRadius: '4px',
-                marginBottom: '10px'
+                backgroundColor: '#f5f5f5',
+                padding: '10px',
+                borderRadius: '6px',
+                marginBottom: '8px',
+                fontSize: '13px'
               }}>
-                <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>
-                  {selectedBattle.player1_character} ({selectedBattle.player1_name}):
+                <p style={{ fontWeight: 'bold', margin: '0 0 4px 0' }}>
+                  {selectedBattle.player1_character}:
                 </p>
-                <p style={{ fontStyle: 'italic' }}>"{selectedBattle.player1_chat}"</p>
+                <p style={{ fontStyle: 'italic', margin: 0, color: '#555' }}>
+                  "{selectedBattle.player1_chat}"
+                </p>
               </div>
               <div style={{ 
-                backgroundColor: '#f9f9f9',
-                padding: '15px',
-                borderRadius: '4px'
+                backgroundColor: '#f5f5f5',
+                padding: '10px',
+                borderRadius: '6px',
+                fontSize: '13px'
               }}>
-                <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>
-                  {selectedBattle.player2_character} ({selectedBattle.player2_name}):
+                <p style={{ fontWeight: 'bold', margin: '0 0 4px 0' }}>
+                  {selectedBattle.player2_character}:
                 </p>
-                <p style={{ fontStyle: 'italic' }}>"{selectedBattle.player2_chat}"</p>
+                <p style={{ fontStyle: 'italic', margin: 0, color: '#555' }}>
+                  "{selectedBattle.player2_chat}"
+                </p>
               </div>
             </div>
 
             <div style={{ 
-              backgroundColor: '#e8f5e9',
-              padding: '20px',
-              borderRadius: '4px',
-              marginBottom: '20px'
+              backgroundColor: '#f0f7f0',
+              padding: '12px',
+              borderRadius: '8px',
+              marginBottom: '15px'
             }}>
-              <h4>판정 결과</h4>
+              <h4 style={{ fontSize: '14px', margin: '0 0 10px 0' }}>판정 결과</h4>
               <div style={{ 
                 display: 'flex', 
                 justifyContent: 'space-around',
-                marginBottom: '15px'
+                alignItems: 'center',
+                marginBottom: '10px'
               }}>
                 <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontWeight: 'bold' }}>{selectedBattle.player1_character}</p>
+                  <p style={{ fontSize: '12px', margin: '0 0 4px 0' }}>
+                    {selectedBattle.player1_character}
+                  </p>
                   <p style={{ 
-                    fontSize: '24px',
-                    color: selectedBattle.player1_score > selectedBattle.player2_score ? '#4caf50' : '#666'
+                    fontSize: '20px',
+                    fontWeight: 'bold',
+                    color: selectedBattle.player1_score > selectedBattle.player2_score ? '#2e7d32' : '#666',
+                    margin: 0
                   }}>
                     {selectedBattle.player1_score}점
                   </p>
                 </div>
-                <div style={{ 
-                  display: 'flex', 
-                  alignItems: 'center',
-                  fontSize: '20px',
-                  color: '#666'
-                }}>
-                  VS
-                </div>
+                <span style={{ fontSize: '14px', color: '#666' }}>VS</span>
                 <div style={{ textAlign: 'center' }}>
-                  <p style={{ fontWeight: 'bold' }}>{selectedBattle.player2_character}</p>
+                  <p style={{ fontSize: '12px', margin: '0 0 4px 0' }}>
+                    {selectedBattle.player2_character}
+                  </p>
                   <p style={{ 
-                    fontSize: '24px',
-                    color: selectedBattle.player2_score > selectedBattle.player1_score ? '#4caf50' : '#666'
+                    fontSize: '20px',
+                    fontWeight: 'bold',
+                    color: selectedBattle.player2_score > selectedBattle.player1_score ? '#2e7d32' : '#666',
+                    margin: 0
                   }}>
                     {selectedBattle.player2_score}점
                   </p>
@@ -308,45 +330,50 @@ export default function History() {
               </div>
               {selectedBattle.judgment_reason && (
                 <div style={{ 
-                  borderTop: '1px solid #ccc',
-                  paddingTop: '15px',
-                  marginTop: '15px'
+                  borderTop: '1px solid #ddd',
+                  paddingTop: '8px',
+                  marginTop: '8px'
                 }}>
-                  <p style={{ fontWeight: 'bold', marginBottom: '5px' }}>판정 이유:</p>
-                  <p style={{ fontStyle: 'italic', color: '#555' }}>
+                  <p style={{ fontSize: '11px', fontWeight: 'bold', margin: '0 0 4px 0' }}>
+                    판정 이유:
+                  </p>
+                  <p style={{ fontSize: '12px', fontStyle: 'italic', color: '#555', margin: 0 }}>
                     {selectedBattle.judgment_reason}
                   </p>
                 </div>
               )}
             </div>
 
-            <div style={{ marginBottom: '20px' }}>
-              <h4>ELO 변화</h4>
-              <p>
-                {selectedBattle.player1_name}: {selectedBattle.player1_elo_before} → {selectedBattle.player1_elo_after}
-                {' '}({selectedBattle.player1_elo_after - selectedBattle.player1_elo_before > 0 ? '+' : ''}{selectedBattle.player1_elo_after - selectedBattle.player1_elo_before})
-              </p>
-              <p>
-                {selectedBattle.player2_name}: {selectedBattle.player2_elo_before} → {selectedBattle.player2_elo_after}
-                {' '}({selectedBattle.player2_elo_after - selectedBattle.player2_elo_before > 0 ? '+' : ''}{selectedBattle.player2_elo_after - selectedBattle.player2_elo_before})
-              </p>
+            <div style={{ 
+              display: 'flex',
+              gap: '8px',
+              fontSize: '12px',
+              color: '#666',
+              marginBottom: '15px'
+            }}>
+              <div style={{ flex: 1 }}>
+                <strong>{selectedBattle.player1_name}:</strong>
+                <br />
+                ELO {selectedBattle.player1_elo_before} → {selectedBattle.player1_elo_after}
+                <span style={{ 
+                  color: selectedBattle.player1_elo_after - selectedBattle.player1_elo_before > 0 ? '#2e7d32' : '#d32f2f',
+                  marginLeft: '4px'
+                }}>
+                  ({selectedBattle.player1_elo_after - selectedBattle.player1_elo_before > 0 ? '+' : ''}{selectedBattle.player1_elo_after - selectedBattle.player1_elo_before})
+                </span>
+              </div>
+              <div style={{ flex: 1 }}>
+                <strong>{selectedBattle.player2_name}:</strong>
+                <br />
+                ELO {selectedBattle.player2_elo_before} → {selectedBattle.player2_elo_after}
+                <span style={{ 
+                  color: selectedBattle.player2_elo_after - selectedBattle.player2_elo_before > 0 ? '#2e7d32' : '#d32f2f',
+                  marginLeft: '4px'
+                }}>
+                  ({selectedBattle.player2_elo_after - selectedBattle.player2_elo_before > 0 ? '+' : ''}{selectedBattle.player2_elo_after - selectedBattle.player2_elo_before})
+                </span>
+              </div>
             </div>
-
-            <button
-              onClick={() => setSelectedBattle(null)}
-              style={{
-                width: '100%',
-                padding: '10px',
-                backgroundColor: '#007bff',
-                color: 'white',
-                border: 'none',
-                borderRadius: '4px',
-                cursor: 'pointer',
-                fontSize: '16px'
-              }}
-            >
-              닫기
-            </button>
           </div>
         </div>
       )}
