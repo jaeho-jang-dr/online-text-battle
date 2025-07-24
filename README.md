@@ -1,6 +1,24 @@
-# Online Text Battle
+# Online Text Battle 🎮
 
 온라인 텍스트 배틀 게임 - 100자 이내의 텍스트로 대결하는 실시간 배틀 게임
+
+## 🚀 빠른 시작 (친구들과 함께하기)
+
+### 방법 1: GitHub Codespaces에서 실행 (완전 무료)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/jaeho-jang-dr/online-text-battle)
+
+1. 위 버튼 클릭 또는 [여기 클릭](https://codespaces.new/jaeho-jang-dr/online-text-battle)
+2. "Create codespace" 클릭
+3. 자동으로 게임이 실행됨 (1-2분 소요)
+4. 포트 탭에서 주소 복사하여 친구들과 공유
+
+**장점:**
+- GitHub 계정만 있으면 무료 사용 가능 (월 120시간 무료)
+- 데이터베이스 포함 완전한 서버 환경
+- 설치 불필요
+
+### 방법 2: Gitpod에서 실행 (무료)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/jaeho-jang-dr/online-text-battle)
 
 ## 기능
 

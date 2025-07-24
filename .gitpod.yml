@@ -1,0 +1,16 @@
+tasks:
+  - init: npm install
+    command: npm run dev
+
+ports:
+  - port: 3000
+    onOpen: open-preview
+    visibility: public
+  - port: 3001
+    onOpen: open-preview
+    visibility: public
+
+vscode:
+  extensions:
+    - dbaeumer.vscode-eslint
+    - esbenp.prettier-vscode
