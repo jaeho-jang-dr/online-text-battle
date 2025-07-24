@@ -18,7 +18,7 @@ export class OllamaService {
   constructor() {
     // Ollama는 기본적으로 localhost:11434에서 실행됩니다
     this.baseUrl = process.env.OLLAMA_API_URL || 'http://localhost:11434';
-    this.model = process.env.OLLAMA_MODEL || 'llama2';
+    this.model = process.env.OLLAMA_MODEL || 'gemma3:latest';
   }
 
   async judgeBattle(chat1: string, chat2: string): Promise<BattleJudgmentResult> {

@@ -13,6 +13,8 @@ export default function Lobby() {
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editBattleChat, setEditBattleChat] = useState('');
   const router = useRouter();
 
   useEffect(() => {
@@ -121,6 +123,43 @@ export default function Lobby() {
     window.open('/?new=true', '_blank');
   };
 
+  const openEditModal = () => {
+    if (character) {
+      setEditBattleChat(character.battle_chat);
+      setShowEditModal(true);
+    }
+  };
+
+  const handleUpdateBattleChat = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/character/update-chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          characterId: character?.id,
+          battle_chat: editBattleChat
+        }),
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        setCharacter({ ...character!, battle_chat: editBattleChat });
+        setShowEditModal(false);
+      } else {
+        setError(data.message);
+      }
+    } catch (error) {
+      setError('배틀 챗 수정 실패');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div>
       <nav className="nav">
@@ -200,9 +239,14 @@ export default function Lobby() {
                          character.type === 'legendary' ? '전설적인 인물' :
                          character.type === 'fictional' ? '가상의 인물' : '역사적 인물'}</p>
                 <div className="battle-chat">"{character.battle_chat}"</div>
-                <button onClick={handleStartBattle} className="battle-button">
-                  배틀 시작
-                </button>
+                <div style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                  <button onClick={handleStartBattle} className="battle-button">
+                    배틀 시작
+                  </button>
+                  <button onClick={openEditModal} className="edit-button">
+                    챗 변경
+                  </button>
+                </div>
               </>
             )}
           </div>
@@ -251,6 +295,42 @@ export default function Lobby() {
           </table>
         </div>
       </div>
+
+      {/* 배틀 챗 수정 모달 */}
+      {showEditModal && (
+        <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <h2>배틀 챗 변경</h2>
+            <form onSubmit={handleUpdateBattleChat}>
+              <div className="form-group">
+                <label>새로운 배틀 챗 (100자 이내)</label>
+                <textarea
+                  value={editBattleChat}
+                  onChange={(e) => setEditBattleChat(e.target.value)}
+                  required
+                  maxLength={100}
+                  rows={3}
+                  style={{ width: '100%' }}
+                />
+                <p style={{ fontSize: '12px', color: '#666', marginTop: '5px' }}>
+                  {editBattleChat.length}/100자
+                </p>
+              </div>
+
+              {error && <div className="error">{error}</div>}
+
+              <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+                <button type="button" onClick={() => setShowEditModal(false)}>
+                  취소
+                </button>
+                <button type="submit" disabled={loading} className="primary-button">
+                  {loading ? '수정 중...' : '변경'}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

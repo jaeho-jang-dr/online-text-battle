@@ -192,3 +192,64 @@ button:disabled {
 .battle-button:hover {
   background: #ff5252;
 }
+
+.edit-button {
+  background: #4caf50;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.edit-button:hover {
+  background: #45a049;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: #2a2a2a;
+  padding: 30px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.modal h2 {
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.primary-button {
+  background: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.primary-button:hover {
+  background: #0056b3;
+}
+
+.primary-button:disabled {
+  background: #6c757d;
+  cursor: not-allowed;
+}
