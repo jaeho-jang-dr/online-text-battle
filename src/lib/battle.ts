@@ -1,4 +1,5 @@
 import { getDb } from './db';
+import { ollamaService } from './ollama';
 
 interface BattleResult {
   winner: 'player1' | 'player2';
@@ -6,8 +7,29 @@ interface BattleResult {
   player2_new_elo: number;
 }
 
-// 간단한 AI 판독 시스템 - 실제로는 더 복잡한 로직이 필요합니다
-export function judgeBattle(chat1: string, chat2: string): 'player1' | 'player2' {
+// Ollama AI를 사용한 판정 시스템
+export async function judgeBattle(chat1: string, chat2: string): Promise<'player1' | 'player2'> {
+  try {
+    // Ollama 서비스가 사용 가능한지 확인
+    const isOllamaAvailable = await ollamaService.testConnection();
+    
+    if (isOllamaAvailable) {
+      // Ollama AI 판정 사용
+      const result = await ollamaService.judgeBattle(chat1, chat2);
+      console.log('Ollama 판정 결과:', result);
+      return result.winner;
+    } else {
+      console.log('Ollama를 사용할 수 없습니다. 기본 판정 로직을 사용합니다.');
+      return fallbackJudgeBattle(chat1, chat2);
+    }
+  } catch (error) {
+    console.error('AI 판정 중 오류 발생:', error);
+    return fallbackJudgeBattle(chat1, chat2);
+  }
+}
+
+// 기존의 간단한 판정 로직 (폴백용)
+function fallbackJudgeBattle(chat1: string, chat2: string): 'player1' | 'player2' {
   // 여러 요소를 고려한 점수 계산
   let score1 = 0;
   let score2 = 0;
@@ -78,8 +100,8 @@ export async function processBattle(
   const player1 = await db.get('SELECT elo_rating FROM users WHERE id = ?', player1Id);
   const player2 = await db.get('SELECT elo_rating FROM users WHERE id = ?', player2Id);
 
-  // 배틀 판정
-  const winner = judgeBattle(player1Chat, player2Chat);
+  // 배틀 판정 (이제 비동기)
+  const winner = await judgeBattle(player1Chat, player2Chat);
   const winnerId = winner === 'player1' ? player1Id : player2Id;
 
   // ELO 계산

@@ -40,7 +40,7 @@ npm run dev
 - 캐릭터 생성 (일반인, 전설적인 인물, 가상의 인물, 역사적 인물)
 - 100자 이내 배틀 챗 설정
 - 실시간 매치메이킹 (실제 유저 또는 AI와 매칭)
-- AI 판독 기반 승부 결정
+- AI 판독 기반 승부 결정 (Ollama AI 지원)
 - ELO 레이팅 시스템
 - 리더보드 및 도전 기능
 
@@ -50,6 +50,7 @@ npm run dev
 - TypeScript
 - SQLite
 - React 19
+- Ollama AI (배틀 판정 시스템)
 
 ## 설치 및 실행
 
@@ -70,6 +71,27 @@ npm start
 - testuser1 / test123
 - testuser2 / test123
 
+## AI 판정 시스템 (Ollama)
+
+이 게임은 Ollama AI를 사용하여 더욱 정교한 배틀 결과 판정을 제공합니다.
+
+### Ollama 설치 방법
+1. [Ollama 공식 사이트](https://ollama.ai)에서 다운로드
+2. 설치 후 터미널에서 실행:
+   ```bash
+   ollama pull llama2
+   ollama serve
+   ```
+
+### 환경 변수 설정 (선택사항)
+```env
+OLLAMA_API_URL=http://localhost:11434  # 기본값
+OLLAMA_MODEL=llama2                     # 사용할 모델
+```
+
+**참고**: Ollama가 설치되지 않은 경우 자동으로 기본 판정 로직을 사용합니다.
+
 ## Version
 
+v0.1.0 - Ollama AI 판정 시스템 추가
 v0.0.0 - 초기 릴리즈
