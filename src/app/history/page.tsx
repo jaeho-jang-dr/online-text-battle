@@ -83,51 +83,97 @@ export default function History() {
             </p>
           ) : (
             <div style={{ marginTop: '20px' }}>
-              <div style={{ 
-                backgroundColor: '#f5f5f5', 
-                padding: '10px',
-                borderRadius: '4px',
-                fontFamily: 'monospace',
-                fontSize: '14px',
-                lineHeight: '1.8'
-              }}>
-                {battles.map((battle, index) => (
-                  <div 
-                    key={battle.id}
-                    style={{ 
-                      cursor: 'pointer',
-                      padding: '5px',
-                      borderRadius: '4px',
-                      transition: 'background-color 0.2s'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#e0e0e0'}
-                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-                    onClick={() => setSelectedBattle(battle)}
-                  >
-                    <span style={{ color: '#666' }}>[{formatDate(battle.ended_at)}]</span>
-                    {' '}
-                    <span style={{ 
-                      color: battle.youWon ? '#4caf50' : '#ff6b6b',
-                      fontWeight: 'bold'
+              {battles.map((battle, index) => (
+                <div 
+                  key={battle.id}
+                  style={{ 
+                    cursor: 'pointer',
+                    padding: '15px',
+                    marginBottom: '10px',
+                    borderRadius: '8px',
+                    border: '1px solid #e0e0e0',
+                    backgroundColor: '#ffffff',
+                    transition: 'all 0.2s ease',
+                    boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.backgroundColor = '#f8f9fa';
+                    e.currentTarget.style.boxShadow = '0 2px 6px rgba(0, 0, 0, 0.1)';
+                    e.currentTarget.style.transform = 'translateY(-1px)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.backgroundColor = '#ffffff';
+                    e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.05)';
+                    e.currentTarget.style.transform = 'translateY(0)';
+                  }}
+                  onClick={() => setSelectedBattle(battle)}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <div style={{ flex: 1 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '8px' }}>
+                        <span style={{ 
+                          fontSize: '18px',
+                          fontWeight: 'bold',
+                          color: battle.youWon ? '#4caf50' : '#f44336',
+                          minWidth: '50px'
+                        }}>
+                          {battle.youWon ? '✓ 승리' : '✗ 패배'}
+                        </span>
+                        <span style={{ 
+                          fontSize: '16px',
+                          fontWeight: '500',
+                          color: '#333'
+                        }}>
+                          {battle.isYourBattle ? battle.player1_character : battle.player2_character} 
+                          <span style={{ color: '#666', margin: '0 8px' }}>vs</span>
+                          {battle.isYourBattle ? battle.player2_character : battle.player1_character}
+                          {battle.is_ai_battle && (
+                            <span style={{ 
+                              marginLeft: '8px',
+                              padding: '2px 6px',
+                              backgroundColor: '#e3f2fd',
+                              color: '#1976d2',
+                              borderRadius: '4px',
+                              fontSize: '12px',
+                              fontWeight: 'normal'
+                            }}>AI</span>
+                          )}
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', gap: '20px', fontSize: '14px', color: '#666' }}>
+                        <span>{formatDate(battle.ended_at)}</span>
+                        <span>
+                          ELO: {battle.isYourBattle ? battle.player1_elo_before : battle.player2_elo_before}
+                          <span style={{ 
+                            margin: '0 5px',
+                            color: battle.youWon ? '#4caf50' : '#f44336',
+                            fontWeight: 'bold'
+                          }}>
+                            →
+                          </span>
+                          {battle.isYourBattle ? battle.player1_elo_after : battle.player2_elo_after}
+                          <span style={{ 
+                            marginLeft: '5px',
+                            color: battle.youWon ? '#4caf50' : '#f44336'
+                          }}>
+                            ({battle.youWon ? '+' : ''}{battle.isYourBattle ? 
+                              battle.player1_elo_after - battle.player1_elo_before :
+                              battle.player2_elo_after - battle.player2_elo_before
+                            })
+                          </span>
+                        </span>
+                      </div>
+                    </div>
+                    <div style={{ 
+                      fontSize: '14px',
+                      color: '#999',
+                      marginLeft: '20px'
                     }}>
-                      {battle.youWon ? '승리' : '패배'}
-                    </span>
-                    {' '}
-                    <span>
-                      {battle.isYourBattle ? battle.player1_character : battle.player2_character} vs{' '}
-                      {battle.isYourBattle ? battle.player2_character : battle.player1_character}
-                      {battle.is_ai_battle ? ' (AI)' : ''}
-                    </span>
-                    {' '}
-                    <span style={{ color: '#888' }}>
-                      (ELO: {battle.isYourBattle ? 
-                        `${battle.player1_elo_before}→${battle.player1_elo_after}` :
-                        `${battle.player2_elo_before}→${battle.player2_elo_after}`
-                      })
-                    </span>
+                      클릭하여 상세보기 →
+                    </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           )}
         </div>
