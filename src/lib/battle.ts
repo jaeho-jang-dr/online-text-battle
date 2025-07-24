@@ -125,13 +125,13 @@ function fallbackJudgeBattleWithDetails(chat1: string, chat2: string) {
   const winnerStrengths = winner === 'player1' ? strengths1 : strengths2;
   const loserStrengths = winner === 'player1' ? strengths2 : strengths1;
   
-  // 재미있는 판정 이유 생성
+  // 짧고 간결한 판정 이유 생성
   const judgmentTemplates = [
-    `압도적인 ${winnerStrengths[0] || '전투력'}으로 상대를 제압! ${loserStrengths[0] ? `상대의 ${loserStrengths[0]}도 훌륭했지만 역부족이었다.` : ''}`,
-    `${winnerStrengths.join('과 ')}의 완벽한 조합! 이것이 진정한 전사의 모습이다!`,
-    `관중들이 열광한다! ${winnerStrengths[0] || '놀라운 실력'}을 보여준 승자의 압승!`,
-    `${Math.abs(score1 - score2) < 5 ? '박빙의 승부였다! 하지만' : '일방적인 승부!'} ${winnerStrengths[0] || '뛰어난 전투 감각'}이 승부를 갈랐다!`,
-    `전설은 이렇게 만들어진다! ${winnerStrengths.slice(0, 2).join(', ')}로 완벽한 승리를 거뒀다!`
+    `${winnerStrengths[0] || '전투력'}의 승리!`,
+    `${winnerStrengths[0] || '실력'}으로 제압!`,
+    `${Math.abs(score1 - score2) < 5 ? '박빙의 승부!' : '압승!'}`,
+    `${winnerStrengths[0] || '기술'}이 빛났다!`,
+    `완벽한 ${winnerStrengths[0] || '전략'}!`
   ];
   
   const reason = judgmentTemplates[Math.floor(Math.random() * judgmentTemplates.length)];
