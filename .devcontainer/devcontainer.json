@@ -4,7 +4,7 @@
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {}
   },
-  "forwardPorts": [3001],
+  "forwardPorts": [3000],
   "postCreateCommand": "chmod +x start.sh && npm install",
   "postAttachCommand": "./start.sh",
   "waitFor": "postCreateCommand",
@@ -23,7 +23,7 @@
     }
   },
   "portsAttributes": {
-    "3001": {
+    "3000": {
       "label": "Game Server",
       "onAutoForward": "openBrowserOnce",
       "visibility": "public",
@@ -33,7 +33,7 @@
   "remoteEnv": {
     "JWT_SECRET": "dev-secret-key-for-codespaces",
     "NODE_ENV": "development",
-    "PORT": "3001",
+    "PORT": "3000",
     "OLLAMA_API_URL": "http://localhost:11434",
     "OLLAMA_MODEL": "llama2"
   }

@@ -12,7 +12,7 @@ fi
 # Set environment variables
 export JWT_SECRET=${JWT_SECRET:-"dev-secret-key-for-codespaces"}
 export NODE_ENV=${NODE_ENV:-"development"}
-export PORT=${PORT:-"3001"}
+export PORT=${PORT:-"3000"}
 
 # Clean up any existing database
 rm -f database.sqlite
