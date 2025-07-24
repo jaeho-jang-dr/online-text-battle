@@ -5,13 +5,13 @@ const path = require('path');
 console.log('🔧 Initializing database...');
 
 // Create database directory if it doesn't exist
-const dbDir = path.dirname('./database.sqlite');
-if (!fs.existsSync(dbDir) && dbDir !== '.') {
-  fs.mkdirSync(dbDir, { recursive: true });
-}
+// Railway에서는 디렉토리 생성이 필요없음
+const dbPath = process.env.DATABASE_URL ? 
+  process.env.DATABASE_URL.replace('file:', '') : 
+  './database.sqlite';
 
 // Initialize database
-const db = new sqlite3.Database('./database.sqlite');
+const db = new sqlite3.Database(dbPath);
 
 db.serialize(() => {
   // Users table
