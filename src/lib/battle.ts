@@ -42,7 +42,8 @@ function fallbackJudgeBattleWithDetails(chat1: string, chat2: string) {
   // 여러 요소를 고려한 점수 계산
   let score1 = 0;
   let score2 = 0;
-  let reasons = [];
+  let strengths1 = [];
+  let strengths2 = [];
 
   // 1. 길이 점수 (적절한 길이)
   const len1 = chat1.length;
@@ -51,15 +52,21 @@ function fallbackJudgeBattleWithDetails(chat1: string, chat2: string) {
   const lenScore2 = Math.min(len2 / 10, 10);
   score1 += lenScore1;
   score2 += lenScore2;
+  
+  if (len1 > 80) strengths1.push('압도적인 기세');
+  if (len2 > 80) strengths2.push('압도적인 기세');
 
   // 2. 특수 키워드 점수
   const powerWords = ['승리', '정복', '최강', '무적', '전설', '마스터', '챔피언', '영웅', '천재'];
   const emotionalWords = ['열정', '투지', '의지', '각오', '결의', '신념'];
+  const actionWords = ['파괴', '분쇄', '격파', '돌파', '제압', '섬멸', '폭발', '번개', '화염'];
   
   let powerScore1 = 0, powerScore2 = 0;
+  let foundPower1 = false, foundPower2 = false;
+  
   powerWords.forEach(word => {
-    if (chat1.includes(word)) powerScore1 += 3;
-    if (chat2.includes(word)) powerScore2 += 3;
+    if (chat1.includes(word)) { powerScore1 += 3; foundPower1 = true; }
+    if (chat2.includes(word)) { powerScore2 += 3; foundPower2 = true; }
   });
 
   emotionalWords.forEach(word => {
@@ -67,43 +74,67 @@ function fallbackJudgeBattleWithDetails(chat1: string, chat2: string) {
     if (chat2.includes(word)) powerScore2 += 2;
   });
   
+  actionWords.forEach(word => {
+    if (chat1.includes(word)) powerScore1 += 2.5;
+    if (chat2.includes(word)) powerScore2 += 2.5;
+  });
+  
   score1 += powerScore1;
   score2 += powerScore2;
+  
+  if (foundPower1) strengths1.push('위압적인 언어 구사');
+  if (foundPower2) strengths2.push('위압적인 언어 구사');
 
   // 3. 느낌표와 물음표 사용
-  const exclamation1 = (chat1.match(/!/g) || []).length * 1.5;
-  const exclamation2 = (chat2.match(/!/g) || []).length * 1.5;
-  score1 += exclamation1;
-  score2 += exclamation2;
+  const exclamation1 = (chat1.match(/!/g) || []).length;
+  const exclamation2 = (chat2.match(/!/g) || []).length;
+  const question1 = (chat1.match(/\?/g) || []).length;
+  const question2 = (chat2.match(/\?/g) || []).length;
+  
+  score1 += exclamation1 * 1.5 + question1 * 2;
+  score2 += exclamation2 * 1.5 + question2 * 2;
+  
+  if (exclamation1 > 2) strengths1.push('열정적인 전투 의지');
+  if (exclamation2 > 2) strengths2.push('열정적인 전투 의지');
+  if (question1 > 0) strengths1.push('심리전 구사');
+  if (question2 > 0) strengths2.push('심리전 구사');
 
   // 4. 창의성 점수 (고유 단어 수)
   const uniqueWords1 = new Set(chat1.split(/\s+/)).size;
   const uniqueWords2 = new Set(chat2.split(/\s+/)).size;
   score1 += uniqueWords1 * 0.5;
   score2 += uniqueWords2 * 0.5;
+  
+  if (uniqueWords1 > 15) strengths1.push('다채로운 표현력');
+  if (uniqueWords2 > 15) strengths2.push('다채로운 표현력');
 
-  // 5. 약간의 랜덤 요소 추가
+  // 5. 특수 문자와 이모티콘
+  const hasSpecial1 = /[★☆♥♡⚔️🔥💥⚡️🌟✨]/.test(chat1);
+  const hasSpecial2 = /[★☆♥♡⚔️🔥💥⚡️🌟✨]/.test(chat2);
+  
+  if (hasSpecial1) { score1 += 3; strengths1.push('화려한 연출'); }
+  if (hasSpecial2) { score2 += 3; strengths2.push('화려한 연출'); }
+
+  // 6. 약간의 랜덤 요소 추가
   const random1 = Math.random() * 5;
   const random2 = Math.random() * 5;
   score1 += random1;
   score2 += random2;
 
   const winner = score1 > score2 ? 'player1' : 'player2';
+  const winnerStrengths = winner === 'player1' ? strengths1 : strengths2;
+  const loserStrengths = winner === 'player1' ? strengths2 : strengths1;
   
-  // 판정 이유 생성
-  if (powerScore1 > powerScore2 || powerScore2 > powerScore1) {
-    reasons.push('강력한 키워드 사용');
-  }
-  if (uniqueWords1 > uniqueWords2 || uniqueWords2 > uniqueWords1) {
-    reasons.push('풍부한 어휘력');
-  }
-  if (exclamation1 > exclamation2 || exclamation2 > exclamation1) {
-    reasons.push('열정적인 표현');
-  }
+  // 재미있는 판정 이유 생성
+  const judgmentTemplates = [
+    `압도적인 ${winnerStrengths[0] || '전투력'}으로 상대를 제압! ${loserStrengths[0] ? `상대의 ${loserStrengths[0]}도 훌륭했지만 역부족이었다.` : ''}`,
+    `${winnerStrengths.join('과 ')}의 완벽한 조합! 이것이 진정한 전사의 모습이다!`,
+    `관중들이 열광한다! ${winnerStrengths[0] || '놀라운 실력'}을 보여준 승자의 압승!`,
+    `${Math.abs(score1 - score2) < 5 ? '박빙의 승부였다! 하지만' : '일방적인 승부!'} ${winnerStrengths[0] || '뛰어난 전투 감각'}이 승부를 갈랐다!`,
+    `전설은 이렇게 만들어진다! ${winnerStrengths.slice(0, 2).join(', ')}로 완벽한 승리를 거뒀다!`
+  ];
   
-  const reason = reasons.length > 0 ? 
-    `${reasons.join(', ')}과 전반적인 전투 표현력을 기준으로 판정` :
-    '전반적인 전투 표현력과 임팩트를 기준으로 판정';
+  const reason = judgmentTemplates[Math.floor(Math.random() * judgmentTemplates.length)];
 
   return {
     winner,
