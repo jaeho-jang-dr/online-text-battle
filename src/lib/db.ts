@@ -6,11 +6,12 @@ let db: Database | null = null;
 
 export async function getDb() {
   if (!db) {
-    // Railway에서는 볼륨에 데이터베이스 저장
-    const filename = process.env.DATABASE_URL || './database.sqlite';
+    // Railway에서는 /tmp 디렉토리 사용 (영구 저장 안됨)
+    const isDevelopment = process.env.NODE_ENV !== 'production';
+    const filename = isDevelopment ? './database.sqlite' : '/tmp/database.sqlite';
     
     db = await open({
-      filename: filename.startsWith('file:') ? filename.substring(5) : filename,
+      filename,
       driver: sqlite3.Database
     });
     

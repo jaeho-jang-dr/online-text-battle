@@ -1,10 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  // Codespaces에서는 서버 모드로 실행
-  output: process.env.CODESPACES ? 'standalone' : 'standalone',
+  output: 'standalone',
   images: {
     unoptimized: true,
+  },
+  experimental: {
+    outputFileTracingRoot: undefined,
+  },
+  typescript: {
+    ignoreBuildErrors: false,
   },
 }
 
