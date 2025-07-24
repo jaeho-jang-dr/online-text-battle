@@ -189,6 +189,42 @@ export default function Battle() {
             {battleResult.winner === 'you' ? '승리!' : '패배...'}
           </h1>
           
+          <div style={{ marginBottom: '20px' }}>
+            <div style={{ 
+              backgroundColor: '#f5f5f5', 
+              padding: '20px', 
+              borderRadius: '8px',
+              marginBottom: '20px'
+            }}>
+              <h3 style={{ marginBottom: '15px' }}>판정 결과</h3>
+              <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '15px' }}>
+                <div>
+                  <p style={{ fontWeight: 'bold' }}>{character?.name}</p>
+                  <p style={{ fontSize: '24px', color: battleResult.winner === 'you' ? '#4caf50' : '#666' }}>
+                    {battleResult.yourScore}점
+                  </p>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <span style={{ fontSize: '20px' }}>VS</span>
+                </div>
+                <div>
+                  <p style={{ fontWeight: 'bold' }}>{opponent.character.name}</p>
+                  <p style={{ fontSize: '24px', color: battleResult.winner === 'opponent' ? '#4caf50' : '#666' }}>
+                    {battleResult.opponentScore}점
+                  </p>
+                </div>
+              </div>
+              <div style={{ 
+                borderTop: '1px solid #ddd', 
+                paddingTop: '15px',
+                fontStyle: 'italic',
+                color: '#555'
+              }}>
+                <p><strong>판정 이유:</strong> {battleResult.judgmentReason}</p>
+              </div>
+            </div>
+          </div>
+          
           <div style={{ marginBottom: '30px' }}>
             <p>당신의 새 ELO: {battleResult.yourNewElo} ({battleResult.yourEloChange > 0 ? '+' : ''}{battleResult.yourEloChange})</p>
             <p>상대의 새 ELO: {battleResult.opponentNewElo} ({battleResult.opponentEloChange > 0 ? '+' : ''}{battleResult.opponentEloChange})</p>

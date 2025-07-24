@@ -271,17 +271,26 @@ export default function Lobby() {
               {leaderboard.map((entry, index) => (
                 <tr key={entry.id}>
                   <td>{index + 1}</td>
-                  <td>{entry.username}</td>
+                  <td>
+                    {entry.username}
+                    {entry.is_ai === 1 && <span style={{ color: '#6c757d', fontSize: '12px' }}> (AI)</span>}
+                  </td>
                   <td>{entry.character_name || '-'}</td>
                   <td>{entry.elo_rating}</td>
                   <td>{entry.total_battles}</td>
                   <td>{entry.win_rate.toFixed(1)}%</td>
                   <td>
-                    <span className={`online-indicator ${entry.is_online ? 'online' : 'offline'}`}></span>
-                    {entry.is_online ? '온라인' : '오프라인'}
+                    {entry.is_ai === 1 ? (
+                      <span style={{ color: '#28a745' }}>항상 온라인</span>
+                    ) : (
+                      <>
+                        <span className={`online-indicator ${entry.is_online ? 'online' : 'offline'}`}></span>
+                        {entry.is_online ? '온라인' : '오프라인'}
+                      </>
+                    )}
                   </td>
                   <td>
-                    {entry.id !== user?.id && entry.is_online && (
+                    {entry.id !== user?.id && (entry.is_online || entry.is_ai === 1) && (
                       <button
                         onClick={() => handleChallenge(entry.id)}
                         className="battle-button"

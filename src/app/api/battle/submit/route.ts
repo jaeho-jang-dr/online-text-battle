@@ -52,7 +52,10 @@ export async function POST(request: NextRequest) {
       yourEloChange: yourNewElo - user.elo_rating,
       opponentEloChange: opponentNewElo - (isWinner ? 
         (yourNewElo - user.elo_rating) * -1 : 
-        (yourNewElo - user.elo_rating) * -1)
+        (yourNewElo - user.elo_rating) * -1),
+      judgmentReason: result.judgment_reason,
+      yourScore: result.player1_score,
+      opponentScore: result.player2_score
     });
   } catch (error) {
     console.error('Battle submit error:', error);

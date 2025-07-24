@@ -83,11 +83,32 @@ async function initializeDb() {
       player2_elo_before INTEGER,
       player2_elo_after INTEGER,
       is_ai_battle BOOLEAN DEFAULT 0,
+      judgment_reason TEXT,
+      player1_score INTEGER,
+      player2_score INTEGER,
       FOREIGN KEY (player1_id) REFERENCES users(id),
       FOREIGN KEY (player2_id) REFERENCES users(id),
       FOREIGN KEY (winner_id) REFERENCES users(id)
     )
   `);
+  
+  // Add new columns if they don't exist (for existing databases)
+  await database.exec(`
+    PRAGMA table_info(battles)
+  `).then(async (result) => {
+    const columns = result.map((col: any) => col.name);
+    if (!columns.includes('judgment_reason')) {
+      await database.exec(`ALTER TABLE battles ADD COLUMN judgment_reason TEXT`);
+    }
+    if (!columns.includes('player1_score')) {
+      await database.exec(`ALTER TABLE battles ADD COLUMN player1_score INTEGER`);
+    }
+    if (!columns.includes('player2_score')) {
+      await database.exec(`ALTER TABLE battles ADD COLUMN player2_score INTEGER`);
+    }
+  }).catch(() => {
+    // Table doesn't exist yet, will be created above
+  });
   
   // Leaderboard view
   await database.exec(`

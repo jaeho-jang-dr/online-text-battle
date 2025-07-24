@@ -20,10 +20,13 @@ export async function GET(request: NextRequest) {
         CASE 
           WHEN u.total_battles > 0 THEN ROUND(CAST(u.wins AS FLOAT) / u.total_battles * 100, 2)
           ELSE 0
-        END as win_rate
+        END as win_rate,
+        CASE 
+          WHEN u.username LIKE 'AI_%' THEN 1
+          ELSE 0
+        END as is_ai
       FROM users u
       LEFT JOIN characters c ON u.id = c.user_id AND c.is_active = 1
-      WHERE u.username NOT LIKE 'AI_%'
       ORDER BY u.elo_rating DESC
       LIMIT 50
     `);

@@ -55,6 +55,7 @@ export interface LeaderboardEntry {
   character_name: string | null;
   character_type: string | null;
   win_rate: number;
+  is_ai?: number;
 }
 
 export interface AuthResponse {
