@@ -261,6 +261,7 @@ export default function Lobby() {
                 <th>플레이어</th>
                 <th>캐릭터</th>
                 <th>ELO</th>
+                <th>배틀</th>
                 <th>승률</th>
                 <th>상태</th>
                 <th>액션</th>
@@ -273,6 +274,7 @@ export default function Lobby() {
                   <td>{entry.username}</td>
                   <td>{entry.character_name || '-'}</td>
                   <td>{entry.elo_rating}</td>
+                  <td>{entry.total_battles}</td>
                   <td>{entry.win_rate.toFixed(1)}%</td>
                   <td>
                     <span className={`online-indicator ${entry.is_online ? 'online' : 'offline'}`}></span>
