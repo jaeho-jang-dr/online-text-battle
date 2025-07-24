@@ -10,7 +10,7 @@
 1. 위 버튼 클릭 또는 [여기 클릭](https://codespaces.new/jaeho-jang-dr/online-text-battle)
 2. "Create codespace" 클릭 (GitHub 로그인 필요)
 3. Codespace가 열리면 자동으로 서버가 시작됩니다
-4. 브라우저가 자동으로 열리거나, PORTS 탭에서 3000번 포트 클릭
+4. 브라우저가 자동으로 열리거나, PORTS 탭에서 3001번 포트 클릭
 5. 생성된 URL을 친구들과 공유!
 
 **수동 실행이 필요한 경우:**
@@ -28,7 +28,7 @@ npm run dev
 - ✅ 설치 불필요, 브라우저에서 모든 것이 실행됨
 
 **친구들과 공유:**
-- Codespace URL 형식: `https://{codespace-name}-3000.app.github.dev`
+- Codespace URL 형식: `https://{codespace-name}-3001.app.github.dev`
 - 게스트 로그인 버튼으로 회원가입 없이 바로 플레이!
 
 ### 방법 2: Gitpod에서 실행 (무료)
