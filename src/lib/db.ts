@@ -93,22 +93,25 @@ async function initializeDb() {
   `);
   
   // Add new columns if they don't exist (for existing databases)
-  await database.exec(`
-    PRAGMA table_info(battles)
-  `).then(async (result) => {
-    const columns = result.map((col: any) => col.name);
+  try {
+    const tableInfo = await database.all(`PRAGMA table_info(battles)`);
+    const columns = tableInfo.map((col: any) => col.name);
+    
     if (!columns.includes('judgment_reason')) {
       await database.exec(`ALTER TABLE battles ADD COLUMN judgment_reason TEXT`);
+      console.log('Added judgment_reason column to battles table');
     }
     if (!columns.includes('player1_score')) {
       await database.exec(`ALTER TABLE battles ADD COLUMN player1_score INTEGER`);
+      console.log('Added player1_score column to battles table');
     }
     if (!columns.includes('player2_score')) {
       await database.exec(`ALTER TABLE battles ADD COLUMN player2_score INTEGER`);
+      console.log('Added player2_score column to battles table');
     }
-  }).catch(() => {
-    // Table doesn't exist yet, will be created above
-  });
+  } catch (error) {
+    console.log('Note: Could not check/add new columns, table might not exist yet:', error);
+  }
   
   // Leaderboard view
   await database.exec(`

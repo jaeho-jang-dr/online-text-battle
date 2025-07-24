@@ -19,6 +19,7 @@ export default function Battle() {
   const [battleResult, setBattleResult] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
+  const [showJudgmentReason, setShowJudgmentReason] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const challengeId = searchParams.get('challenge');
@@ -214,14 +215,48 @@ export default function Battle() {
                   </p>
                 </div>
               </div>
-              <div style={{ 
-                borderTop: '1px solid #ddd', 
-                paddingTop: '15px',
-                fontStyle: 'italic',
-                color: '#555'
-              }}>
-                <p><strong>판정 이유:</strong> {battleResult.judgmentReason}</p>
-              </div>
+              
+              {showJudgmentReason ? (
+                <div style={{ 
+                  borderTop: '1px solid #ddd', 
+                  paddingTop: '15px',
+                  fontStyle: 'italic',
+                  color: '#555'
+                }}>
+                  <p><strong>판정 이유:</strong> {battleResult.judgmentReason}</p>
+                  <button 
+                    onClick={() => setShowJudgmentReason(false)}
+                    style={{ 
+                      marginTop: '10px',
+                      padding: '5px 10px',
+                      fontSize: '12px',
+                      backgroundColor: '#f0f0f0',
+                      border: '1px solid #ddd',
+                      borderRadius: '4px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    숨기기
+                  </button>
+                </div>
+              ) : (
+                <div style={{ textAlign: 'center', marginTop: '10px' }}>
+                  <button 
+                    onClick={() => setShowJudgmentReason(true)}
+                    style={{ 
+                      padding: '5px 15px',
+                      fontSize: '12px',
+                      backgroundColor: '#fff',
+                      border: '1px solid #ddd',
+                      borderRadius: '4px',
+                      cursor: 'pointer',
+                      color: '#666'
+                    }}
+                  >
+                    🤔 판정 이유가 궁금해요
+                  </button>
+                </div>
+              )}
             </div>
           </div>
           

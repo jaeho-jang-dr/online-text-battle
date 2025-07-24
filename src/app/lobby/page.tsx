@@ -167,6 +167,9 @@ export default function Lobby() {
           <h1>Online Text Battle</h1>
           <div className="nav-links">
             <span>환영합니다, {user?.username}님!</span>
+            <button onClick={() => router.push('/history')} style={{ marginRight: '10px' }}>
+              배틀 기록
+            </button>
             <button onClick={handleNewLogin} style={{ marginRight: '10px' }}>
               다른 계정으로 로그인
             </button>
