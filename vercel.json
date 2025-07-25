@@ -1,9 +1,10 @@
 {
   "buildCommand": "npm run build",
+  "outputDirectory": ".next",
   "installCommand": "npm install",
   "framework": "nextjs",
   "regions": ["icn1"],
   "env": {
-    "JWT_SECRET": "@jwt-secret"
+    "NODE_ENV": "production"
   }
 }

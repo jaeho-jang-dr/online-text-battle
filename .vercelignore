@@ -1,0 +1,13 @@
+.git
+node_modules
+.next
+.env.local
+.env
+*.log
+.DS_Store
+coverage
+.nyc_output
+dist
+build
+*.db
+*.sqlite
