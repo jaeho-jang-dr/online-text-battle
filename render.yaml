@@ -8,6 +8,6 @@ services:
       - key: NODE_ENV
         value: production
       - key: JWT_SECRET
-        generateValue: true
+        value: 228826900860f57cc4e8eb18c1d1eb4cb97cea9798bb4187a5feb920de7f9ee8d05d1817739dd100ec461d2436a4d55f41973cc9483d66bfcfa42c2d1851726a
       - key: PORT
         value: 10000

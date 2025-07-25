@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev -p ${PORT:-5173} -H 0.0.0.0",
     "build": "next build",
-    "start": "next start -H 0.0.0.0 -p ${PORT:-5173}",
+    "start": "next start -H 0.0.0.0 -p ${PORT:-10000}",
     "export": "next export",
     "deploy": "npm run build && npm run export",
     "codespace": "./start.sh",
