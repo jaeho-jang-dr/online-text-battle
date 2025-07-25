@@ -50,6 +50,11 @@ NODE_ENV=production
 - Battles: 배틀 기록
 - Rankings: 랭킹 정보
 
+## ⚠️ 중요: 데이터베이스 선택
+- **SQLite 사용 금지** - Vercel, Railway 등 서버리스 환경에서 작동 안 함
+- **PostgreSQL 사용 필수** - Supabase, Neon, Railway PostgreSQL 등 사용
+- 다음 프로젝트부터는 처음부터 PostgreSQL로 시작할 것
+
 ## 실행 방법
 ```bash
 # 개발 환경 실행
