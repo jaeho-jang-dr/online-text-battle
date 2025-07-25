@@ -1,0 +1,26 @@
+run = "npm install && npm run dev"
+entrypoint = "src/pages/index.tsx"
+hidden = [".next", "node_modules", ".git"]
+modules = ["nodejs-20:v25-20240712-c712107"]
+
+[nix]
+channel = "stable-23_11"
+
+[deployment]
+run = ["sh", "-c", "npm install && npm run build && npm run start"]
+deploymentTarget = "cloudrun"
+ignorePorts = false
+
+[[ports]]
+localPort = 3000
+externalPort = 80
+
+[env]
+NODE_ENV = "production"
+NEXT_TELEMETRY_DISABLED = "1"
+
+[packager]
+language = "nodejs"
+
+[packager.features]
+enabledForHosting = true

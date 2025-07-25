@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p ${PORT:-3000}",
+    "dev": "next dev -p ${PORT:-3000} -H 0.0.0.0",
     "build": "next build",
     "start": "next start -H 0.0.0.0 -p ${PORT:-3000}",
     "export": "next export",
     "deploy": "npm run build && npm run export",
     "codespace": "./start.sh",
-    "postinstall": "node scripts/init-db.js"
+    "postinstall": "node scripts/init-db.js",
+    "replit": "npm install && npm run build && npm run start"
   },
   "dependencies": {
     "@types/sqlite3": "^3.1.11",
