@@ -1,4 +1,4 @@
-run = "npm install && npm run dev"
+run = ["sh", "-c", "npm install && npm run dev"]
 entrypoint = "src/pages/index.tsx"
 hidden = [".next", "node_modules", ".git"]
 modules = ["nodejs-20:v25-20240712-c712107"]
